@@ -3,6 +3,7 @@ package com.microservice.accounts.Service;
 import com.microservice.accounts.Constants.AccountConstants;
 import com.microservice.accounts.Entity.Account;
 import com.microservice.accounts.Entity.Customer;
+import com.microservice.accounts.Exception.CustomerAlreadyExistsExceptions;
 import com.microservice.accounts.Mapper.CustomerMapper;
 import com.microservice.accounts.Repository.AccountRepository;
 import com.microservice.accounts.Repository.CustomerRepository;
@@ -10,6 +11,7 @@ import com.microservice.accounts.dto.CustomerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -21,12 +23,16 @@ public class AccountServiceImpl implements AccuntService {
 
     @Override
     public void createAccount(CustomerDto customerDto) {
-       Customer customer = CustomerMapper.mapToCustomer(customerDto,new Customer());
+        Customer customer = CustomerMapper.mapToCustomer(customerDto,new Customer());
+        Optional<Customer> optionalCustomer =  customerRepository.findByMobileNumber(customer.getMobileNumber());
+        if(optionalCustomer.isPresent()){
+            throw new CustomerAlreadyExistsExceptions("Customer already exists with given mobileNumber"+ customerDto.getMobileNumber());
+        }
        Customer savedCustomer =  customerRepository.save(customer);
        accountRepository.save(createNewAccount(savedCustomer));
     }
 
-    private Account createNewAccount(Customer customer) {
+    private  Account createNewAccount(Customer customer) {
         Account newAccount = new Account();
         newAccount.setCustomerId(customer.getCustomerId());
         long randomAccNumber = 1000000000L + new Random().nextLong(900000000);
@@ -34,6 +40,5 @@ public class AccountServiceImpl implements AccuntService {
         newAccount.setAccountType(AccountConstants.SAVING);
         return newAccount;
     }
-
 
 }
