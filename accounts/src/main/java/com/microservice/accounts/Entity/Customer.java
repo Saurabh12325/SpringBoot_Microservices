@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.service.annotation.GetExchange;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Getter
@@ -17,4 +19,6 @@ public class Customer extends BaseEntity {
     private String email;
     @Column(name = "mobile_number")
     private String mobileNumber;
+
+
 }
