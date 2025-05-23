@@ -5,12 +5,13 @@ import com.microservice.accounts.Entity.Account;
 import com.microservice.accounts.Entity.Customer;
 import com.microservice.accounts.Exception.CustomerAlreadyExistsExceptions;
 import com.microservice.accounts.Exception.ResourceNotFoundException;
+import com.microservice.accounts.Mapper.AccountMapper;
 import com.microservice.accounts.Mapper.CustomerMapper;
 import com.microservice.accounts.Repository.AccountRepository;
 import com.microservice.accounts.Repository.CustomerRepository;
+import com.microservice.accounts.dto.AccountDto;
 import com.microservice.accounts.dto.CustomerDto;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -53,8 +54,15 @@ public class AccountServiceImpl implements AccuntService {
     }
 
     @Override
-    public void fetchAccount(String mobileNumber) {
-   Customer customer =  customerRepository.findByMobileNumber(mobileNumber).orElse(() -> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber));
-    }
+    public CustomerDto fetchAccount(String mobileNumber) {
+   Customer customer =  customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+           () -> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber));
 
+    Account account =  accountRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
+          () -> new ResourceNotFoundException("Account","customerId",customer.getCustomerId().toString())
+  );
+    CustomerDto customerDto = CustomerMapper.mapT0CustomerDto(customer,new CustomerDto());
+    customerDto.setAccountDto(AccountMapper.mapToAccountDto(account,new AccountDto()));
+    return customerDto;
+};
 }

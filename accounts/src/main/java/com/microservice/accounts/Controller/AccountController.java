@@ -27,8 +27,8 @@ public class AccountController {
 
     @GetMapping("/fetch")
     public ResponseEntity<CustomerDto>fetchAccount(@RequestParam String mobileNumber){
-        return  null;
-
+        CustomerDto customerDto = accuntService.fetchAccount(mobileNumber);
+         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
 
 }

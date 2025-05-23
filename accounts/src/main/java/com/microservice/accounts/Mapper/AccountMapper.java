@@ -5,7 +5,7 @@ import com.microservice.accounts.dto.AccountDto;
 
 public class AccountMapper {
 
-public static AccountDto mapToAccountDto(AccountDto accountDto, Account account) {
+public static AccountDto mapToAccountDto(Account account , AccountDto accountDto) {
     accountDto.setAccountNumber(account.getAccountNumber());
     accountDto.setAccountType(account.getAccountType());
     accountDto.setBranchAddress(account.getBranchAddress());
@@ -22,7 +22,7 @@ public static AccountDto mapToAccountDto(AccountDto accountDto, Account account)
      * @return the mapped Account
      */
 /* <<<<<<<<<<  833a4e46-84cf-44e2-bb63-7e6848e61e77  >>>>>>>>>>> */
-public static Account mapToAccount(Account account , AccountDto accountDto) {
+public static Account mapToAccount(AccountDto accountDto, Account account) {
     account.setAccountNumber(accountDto.getAccountNumber());
     account.setAccountType(accountDto.getAccountType());
     account.setBranchAddress(accountDto.getBranchAddress());
