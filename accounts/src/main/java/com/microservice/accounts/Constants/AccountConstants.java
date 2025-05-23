@@ -5,7 +5,7 @@ public class AccountConstants {
 
     }
     public static final String SAVING = "SAVING";
-    public static final String ADDRESS = "123 MAIN STREET, NEW YORK";
+    public static final String BRANCH_ADDRESS = "123 MAIN STREET, NEW YORK";
     public static final String STATUS_201 = "201";
     public static final String MESSAGE_201 = "ACCOUNT CREATED SUCCESSFULLY";
     public static final String STATUS_200 = "200";

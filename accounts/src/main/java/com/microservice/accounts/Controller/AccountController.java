@@ -25,4 +25,10 @@ public class AccountController {
              .body(new ResponseDto(AccountConstants.STATUS_201,AccountConstants.MESSAGE_201));
     }
 
+    @GetMapping("/fetch")
+    public ResponseEntity<CustomerDto>fetchAccount(@RequestParam String mobileNumber){
+        return  null;
+
+    }
+
 }

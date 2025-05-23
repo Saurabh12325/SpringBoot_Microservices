@@ -4,6 +4,7 @@ import com.microservice.accounts.Constants.AccountConstants;
 import com.microservice.accounts.Entity.Account;
 import com.microservice.accounts.Entity.Customer;
 import com.microservice.accounts.Exception.CustomerAlreadyExistsExceptions;
+import com.microservice.accounts.Exception.ResourceNotFoundException;
 import com.microservice.accounts.Mapper.CustomerMapper;
 import com.microservice.accounts.Repository.AccountRepository;
 import com.microservice.accounts.Repository.CustomerRepository;
@@ -37,15 +38,23 @@ public class AccountServiceImpl implements AccuntService {
        accountRepository.save(createNewAccount(savedCustomer));
     }
 
+
+
     private Account createNewAccount(Customer customer) {
         Account newAccount = new Account();
         newAccount.setCustomerId(customer.getCustomerId());
         long randomAccNumber = 1000000000L + new Random().nextLong(900000000);
         newAccount.setAccountNumber(String.valueOf(randomAccNumber));
         newAccount.setAccountType(AccountConstants.SAVING);
+        newAccount.setBranchAddress(AccountConstants.BRANCH_ADDRESS);
         newAccount.setCreatedAt(LocalDateTime.now());
         newAccount.setCreatedBy("Anonymous");
         return newAccount;
+    }
+
+    @Override
+    public void fetchAccount(String mobileNumber) {
+   Customer customer =  customerRepository.findByMobileNumber(mobileNumber).orElse(() -> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber));
     }
 
 }
