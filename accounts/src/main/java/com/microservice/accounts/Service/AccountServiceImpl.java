@@ -64,5 +64,16 @@ public class AccountServiceImpl implements AccuntService {
     CustomerDto customerDto = CustomerMapper.mapT0CustomerDto(customer,new CustomerDto());
     customerDto.setAccountDto(AccountMapper.mapToAccountDto(account,new AccountDto()));
     return customerDto;
-};
+}
+
+    @Override
+    public boolean updateAccount(CustomerDto customerDto) {
+        boolean isUpdate = false;
+        AccountDto accountDto = customerDto.getAccountDto();
+        if(accountDto != null){
+            Account account = accountRepository.findById(accountDto.getAccountNumber()).orElseThrow()
+        }
+    }
+
+    ;
 }
