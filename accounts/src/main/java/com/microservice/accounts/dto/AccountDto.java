@@ -8,7 +8,7 @@ import lombok.Data;
 public class AccountDto {
 
     @Column(name = "account_number")
-    private String accountNumber;
+    private Long accountNumber;
     @Column(name = "account_type")
     private String accountType;
     @Column(name = "branch_address")
