@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccuntService {
         Account newAccount = new Account();
         newAccount.setCustomerId(customer.getCustomerId());
         long randomAccNumber = 1000000000L + new Random().nextLong(900000000);
-        newAccount.setAccountNumber(String.valueOf(randomAccNumber));
+        newAccount.setAccountNumber((randomAccNumber));
         newAccount.setAccountType(AccountConstants.SAVING);
         newAccount.setBranchAddress(AccountConstants.BRANCH_ADDRESS);
         newAccount.setCreatedAt(LocalDateTime.now());
@@ -71,16 +71,19 @@ public class AccountServiceImpl implements AccuntService {
         boolean isUpdate = false;
         AccountDto accountDto = customerDto.getAccountDto();
         if(accountDto != null){
-            Account account = accountRepository.findById(accountDto.getAccountNumber()).orElseThrow(()->new ResourceNotFoundException("Account","accountNumber",accountDto.getAccountNumber().toString()));
+            Account account = accountRepository.findById(accountDto.getAccountNumber())
+                    .orElseThrow(()->new ResourceNotFoundException("Account","accountNumber",accountDto.getAccountNumber().toString()));
             AccountMapper.mapToAccount(accountDto,account);
             account =  accountRepository.save(account);
             Long customerId = account.getCustomerId();
-            Customer customer = customerRepository.findById(customerId).orElseThrow(()->new ResourceNotFoundException("Customer","customerId",customerId.toString()));
+            Customer customer = customerRepository.findById(customerId).orElseThrow(
+                    ()->new ResourceNotFoundException("Customer","customerId",customerId.toString()));
             CustomerMapper.mapToCustomer(customerDto,customer);
              customerRepository.save(customer);
             isUpdate = true;
         }
 
+        return isUpdate;
     }
 
     ;
