@@ -90,10 +90,11 @@ public class AccountServiceImpl implements AccuntService {
 
     @Override
     public boolean deleteAccount(String mobileNumber) {
-        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(()->new ResourceNotFoundException("Customer", "mobileNumber", "mobileNumber"));
-
-        )
-        return false;
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(()->new ResourceNotFoundException("Customer", "mobileNumber", "mobileNumber"));
+        accountRepository.deleteByCustomerId(customer.getCustomerId());
+        customerRepository.deleteById(customer.getCustomerId());
+        return true;
     }
 
 
