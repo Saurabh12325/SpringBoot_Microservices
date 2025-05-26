@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccuntService {
         Customer customer = CustomerMapper.mapToCustomer(customerDto,new Customer());
         Optional<Customer> optionalCustomer =  customerRepository.findByMobileNumber(customer.getMobileNumber());
         if(optionalCustomer.isPresent()){
-            throw new CustomerAlreadyExistsExceptions("Customer already exists with given mobileNumber"+ customerDto.getMobileNumber());
+            throw new CustomerAlreadyExistsExceptions("Customer already exists with given mobileNumber " + customerDto.getMobileNumber());
         }
           customer.setCreatedAt(LocalDateTime.now());
           customer.setCreatedBy("Anonymous");
