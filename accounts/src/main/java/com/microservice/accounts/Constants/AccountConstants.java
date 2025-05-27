@@ -1,9 +1,7 @@
 package com.microservice.accounts.Constants;
 
 public class AccountConstants {
-    private AccountConstants() {
 
-    }
     public static final String SAVING = "SAVING";
     public static final String BRANCH_ADDRESS = "123 MAIN STREET, NEW YORK";
     public static final String STATUS_201 = "201";
