@@ -4,6 +4,7 @@ import com.microservice.accounts.Constants.AccountConstants;
 import com.microservice.accounts.Service.AccuntService;
 import com.microservice.accounts.dto.CustomerDto;
 import com.microservice.accounts.dto.ResponseDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
+@Tag(
+        name = "Account Controller REST API ", description = "Account Controller CRUD REST API Microservices")
 @RestController
 @RequestMapping(path = "/api",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
