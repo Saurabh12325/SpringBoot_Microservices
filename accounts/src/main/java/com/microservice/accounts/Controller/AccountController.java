@@ -3,7 +3,13 @@ package com.microservice.accounts.Controller;
 import com.microservice.accounts.Constants.AccountConstants;
 import com.microservice.accounts.Service.AccuntService;
 import com.microservice.accounts.dto.CustomerDto;
+import com.microservice.accounts.dto.ErrorResponseDto;
 import com.microservice.accounts.dto.ResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -23,6 +29,24 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     private AccuntService accuntService;
+    @Operation(
+            summary = "Create Account REST API",
+            description = "REST API to create new Customer &  Account inside Bank"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "HTTP Status CREATED"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
     @PostMapping("/create")
     public ResponseEntity<ResponseDto>createAccount( @Valid @RequestBody CustomerDto customerDto){
       accuntService.createAccount(customerDto);
